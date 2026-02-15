@@ -49,6 +49,57 @@ paths:
                 password: { type: string }
       responses:
         '200':
-          description: OK
+          description: OK (returns accessToken, refreshToken)
         '401':
           description: Unauthorized
+  /auth/refresh:
+    post:
+      summary: Refresh access token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [refreshToken]
+              properties:
+                refreshToken: { type: string }
+      responses:
+        '200':
+          description: New accessToken and refreshToken
+        '401':
+          description: Invalid or expired refresh token
+  /users/profile:
+    get:
+      summary: Get my profile (auth required)
+    patch:
+      summary: Update my profile (auth required)
+    delete:
+      summary: Deactivate my profile (auth required)
+  /users/profile/avatar:
+    post:
+      summary: Upload avatar image (multipart/form-data, field: avatar)
+  /drivers/register:
+    post:
+      summary: Register as driver (auth required)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                licenseNumber: { type: string }
+                vehicleInfo: { type: object }
+      responses:
+        '201':
+          description: Driver profile created
+  /drivers/me:
+    get:
+      summary: Get my driver profile (driver role required)
+    patch:
+      summary: Update my driver profile
+  /drivers/me/availability:
+    patch:
+      summary: Set availability (isAvailable: boolean)
+  /drivers/documents/license:
+    post:
+      summary: Upload license document (multipart, field: license)

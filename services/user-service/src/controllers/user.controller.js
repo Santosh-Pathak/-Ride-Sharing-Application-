@@ -30,4 +30,18 @@ async function updateProfile(req, res, next) {
   }
 }
 
-module.exports = { getProfile, updateProfile };
+async function deactivateProfile(req, res, next) {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user.userId,
+      { isActive: false },
+      { new: true }
+    ).select('-passwordHash');
+    if (!user) throw new AppError('User not found', 404, 'NOT_FOUND');
+    res.json({ success: true, data: { user }, message: 'Profile deactivated' });
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = { getProfile, updateProfile, deactivateProfile };

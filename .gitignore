@@ -49,6 +49,7 @@ tmp/
 temp/
 *.tmp
 .cache/
+uploads/
 
 # Secrets
 *.pem

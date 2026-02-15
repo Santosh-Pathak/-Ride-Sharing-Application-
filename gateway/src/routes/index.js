@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.use('/auth', authLimiter, createServiceProxy('user'));
 router.use('/users', defaultLimiter, createServiceProxy('user'));
+router.use('/drivers', defaultLimiter, createServiceProxy('user'));
 router.use('/rides', defaultLimiter, createServiceProxy('ride'));
 router.use('/location', defaultLimiter, createServiceProxy('location'));
 router.use('/payments', defaultLimiter, createServiceProxy('payment'));
