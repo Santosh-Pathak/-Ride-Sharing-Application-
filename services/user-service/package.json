@@ -1,0 +1,22 @@
+{
+  "name": "@rideshare/user-service",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "node --watch src/app.js",
+    "test": "node --test tests/*.js",
+    "test:ci": "npm run test"
+  },
+  "dependencies": {
+    "@rideshare/shared": "*",
+    "bcryptjs": "^2.4.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.3"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.4"
+  }
+}

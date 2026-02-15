@@ -1,0 +1,54 @@
+{
+  "name": "rideshare-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Enterprise-grade ride-sharing platform backend",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "install:all": "npm install && npm run install:workspaces",
+    "install:workspaces": "npm install --workspace=gateway --workspace=shared --workspace=services/user-service --workspace=services/ride-service --workspace=services/location-service --workspace=services/payment-service --workspace=services/notification-service --workspace=services/analytics-service",
+    "lint": "eslint . --ext .js",
+    "lint:fix": "eslint . --ext .js --fix",
+    "format": "prettier --write \"**/*.{js,json,md,yml,yaml}\"",
+    "format:check": "prettier --check \"**/*.{js,json,md,yml,yaml}\"",
+    "test": "npm run test --workspaces --if-present",
+    "test:ci": "npm run test:ci --workspaces --if-present",
+    "docker:up": "docker compose -f infrastructure/docker/docker-compose.yml up -d",
+    "docker:down": "docker compose -f infrastructure/docker/docker-compose.yml down",
+    "docker:logs": "docker compose -f infrastructure/docker/docker-compose.yml logs -f",
+    "gateway": "npm run start --workspace=gateway",
+    "user-service": "npm run start --workspace=services/user-service",
+    "ride-service": "npm run start --workspace=services/ride-service",
+    "location-service": "npm run start --workspace=services/location-service",
+    "payment-service": "npm run start --workspace=services/payment-service",
+    "notification-service": "npm run start --workspace=services/notification-service",
+    "analytics-service": "npm run start --workspace=services/analytics-service",
+    "prepare": "node -e \"try { require('husky').install() } catch (e) {}\""
+  },
+  "workspaces": [
+    "gateway",
+    "shared",
+    "services/*"
+  ],
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-node": "^11.1.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  },
+  "author": "",
+  "license": "MIT"
+}

@@ -1,0 +1,54 @@
+openapi: 3.0.3
+info:
+  title: RideShare API
+  description: Enterprise ride-sharing platform API
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: Gateway (local)
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: OK
+  /auth/register:
+    post:
+      summary: Register user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password, name]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string, minLength: 8 }
+                name: { type: string }
+                phone: { type: string }
+                role: { type: string, enum: [rider, driver, admin] }
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Validation error
+  /auth/login:
+    post:
+      summary: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string }
+                password: { type: string }
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized

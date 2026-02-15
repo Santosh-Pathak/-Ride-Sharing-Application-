@@ -1,0 +1,17 @@
+{
+  "name": "@rideshare/location-service",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "node --watch src/app.js",
+    "test": "node --test tests/*.js",
+    "test:ci": "npm run test"
+  },
+  "dependencies": {
+    "@rideshare/shared": "*",
+    "express": "^4.18.2",
+    "mongoose": "^8.0.3",
+    "socket.io": "^4.6.1"
+  }
+}

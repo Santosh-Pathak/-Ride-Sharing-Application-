@@ -1,0 +1,14 @@
+{
+  "name": "@rideshare/shared",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No tests in shared\" && exit 0"
+  },
+  "dependencies": {
+    "ioredis": "^5.4.1",
+    "kafkajs": "^2.2.4",
+    "winston": "^3.11.0"
+  }
+}
