@@ -5,6 +5,11 @@
 - **users**: email, passwordHash, name, phone, role, avatar, isActive
 - **drivers**: userId, licenseNumber, vehicleInfo, isVerified, isAvailable, rating, totalRides
 
+## MongoDB (Location Service)
+
+- **locations**: driverId, location (GeoJSON Point), heading, speed, isAvailable, updatedAt (2dsphere index)
+- **locationhistories**: driverId, location, heading, speed, recordedAt (TTL 7 days)
+
 ## MongoDB (Ride Service)
 
 - **rides**: riderId, driverId, pickup, dropoff, status, fare, startedAt, completedAt
@@ -18,6 +23,7 @@
 
 ## Redis
 
-- Active driver locations (geo)
-- Session / token blacklist
-- Rate limit counters (if used at gateway)
+- **driver:locations** – GEO set of driver positions (GEORADIUS for nearby)
+- **driver:available** – SET of available driver IDs
+- Session / token blacklist (user-service)
+- Rate limit counters (gateway)
