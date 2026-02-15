@@ -4,6 +4,7 @@ const driverSchema = new mongoose.Schema(
   {
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
     licenseNumber: { type: String, required: true },
+    licenseDocumentUrl: { type: String },
     vehicleInfo: {
       make: String,
       model: String,
