@@ -103,3 +103,65 @@ paths:
   /drivers/documents/license:
     post:
       summary: Upload license document (multipart, field: license)
+  # Location service (Day 3)
+  /location:
+    put:
+      summary: Update driver location (driver auth required)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                lat: { type: number }
+                lng: { type: number }
+                heading: { type: number, minimum: 0, maximum: 360 }
+                speed: { type: number, minimum: 0 }
+                isAvailable: { type: boolean }
+      responses:
+        '200':
+          description: Updated location
+  /location/offline:
+    post:
+      summary: Set driver offline (driver auth required)
+  /location/nearby:
+    get:
+      summary: Get nearby drivers (query: lat, lng, radiusKm?, limit?)
+      parameters:
+        - name: lat
+          in: query
+          required: true
+          schema: { type: number }
+        - name: lng
+          in: query
+          required: true
+          schema: { type: number }
+        - name: radiusKm
+          in: query
+          schema: { type: number, default: 5 }
+        - name: limit
+          in: query
+          schema: { type: number, default: 20 }
+  /location/driver/{driverId}:
+    get:
+      summary: Get a driver's current location
+  /location/eta:
+    get:
+      summary: Get ETA between two points (query: fromLat, fromLng, toLat, toLng, avgSpeedKmh?)
+      parameters:
+        - name: fromLat
+          in: query
+          required: true
+          schema: { type: number }
+        - name: fromLng
+          in: query
+          required: true
+          schema: { type: number }
+        - name: toLat
+          in: query
+          required: true
+          schema: { type: number }
+        - name: toLng
+          in: query
+          required: true
+          schema: { type: number }
