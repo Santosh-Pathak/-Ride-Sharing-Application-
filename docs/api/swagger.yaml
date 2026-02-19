@@ -165,3 +165,41 @@ paths:
           in: query
           required: true
           schema: { type: number }
+  # Ride service (Day 4)
+  /rides:
+    post:
+      summary: Request a ride (rider auth)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [pickupLat, pickupLng, dropoffLat, dropoffLng]
+              properties:
+                pickupLat: { type: number }
+                pickupLng: { type: number }
+                dropoffLat: { type: number }
+                dropoffLng: { type: number }
+      responses:
+        '201':
+          description: Ride created (requested or matched)
+    get:
+      summary: Get my rides (query: asRider, asDriver, limit)
+  /rides/{id}:
+    get:
+      summary: Get ride by id (rider/driver/admin)
+  /rides/{id}/cancel:
+    post:
+      summary: Cancel ride (body: reason?)
+  /rides/{id}/accept:
+    post:
+      summary: Driver accept ride
+  /rides/{id}/reject:
+    post:
+      summary: Driver reject ride (body: reason?)
+  /rides/{id}/start:
+    post:
+      summary: Driver start ride
+  /rides/{id}/complete:
+    post:
+      summary: Driver complete ride (body: distanceKm?, durationMin?)
