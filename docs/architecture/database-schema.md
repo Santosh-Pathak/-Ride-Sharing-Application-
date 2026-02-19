@@ -12,8 +12,7 @@
 
 ## MongoDB (Ride Service)
 
-- **rides**: riderId, driverId, pickup, dropoff, status, fare, startedAt, completedAt
-- **ride_requests**: riderId, pickup, dropoff, status, createdAt
+- **rides**: riderId, driverId, status (requested|matched|accepted|driver_arriving|in_progress|completed|cancelled), pickup/dropoff (GeoJSON), fare (baseFare, distanceKm, durationMin, ratePerKm, ratePerMin, surgeMultiplier, total), requestedAt, matchedAt, acceptedAt, startedAt, completedAt, cancelledAt, cancellationReason, acceptanceTimeoutAt
 
 ## PostgreSQL (Payment Service)
 
