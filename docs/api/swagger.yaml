@@ -203,3 +203,33 @@ paths:
   /rides/{id}/complete:
     post:
       summary: Driver complete ride (body: distanceKm?, durationMin?)
+  # Payment service (Day 5)
+  /payments/wallet:
+    get:
+      summary: Get my wallet (balance)
+    post:
+      summary: (use /payments/wallet/topup or /payments/wallet/withdraw)
+  /payments/wallet/topup:
+    post:
+      summary: Top up wallet (body: amountCents or amount, description?)
+  /payments/wallet/withdraw:
+    post:
+      summary: Withdraw from wallet (body: amountCents or amount, description?)
+  /payments/transactions:
+    get:
+      summary: Get my transaction history (query: limit?, offset?)
+  /payments/payments:
+    get:
+      summary: Get my payments list (query: limit?)
+  /payments/payments/{id}:
+    get:
+      summary: Get payment by id
+  /payments/payments/{id}/invoice:
+    get:
+      summary: Get invoice for payment
+  /payments/payments/{id}/refund:
+    post:
+      summary: Refund payment (body: amountCents? or amount?)
+  /payments/payments/intent:
+    post:
+      summary: Create Stripe payment intent (body: amountCents or amount, metadata?)
