@@ -16,9 +16,9 @@
 
 ## PostgreSQL (Payment Service)
 
-- **payments**: id, ride_id, user_id, amount, currency, status, stripe_id
-- **transactions**: id, payment_id, type, amount, balance_after
-- **wallets**: user_id, balance_currency, balance_amount
+- **wallets**: id, user_id (unique), balance_cents, currency, created_at, updated_at
+- **payments**: id, ride_id, user_id, amount_cents, currency, status (pending|processing|completed|failed|refunded), external_id (Stripe), metadata (JSONB)
+- **transactions**: id, user_id, type (credit|debit|ride_payment), amount_cents, balance_after_cents, payment_id (FK), description
 
 ## Redis
 
