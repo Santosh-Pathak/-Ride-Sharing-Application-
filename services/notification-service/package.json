@@ -5,11 +5,18 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "node --watch src/app.js",
-    "test": "node --test tests/*.js",
+    "test": "jest --config jest.config.cjs --runInBand",
     "test:ci": "npm run test"
   },
   "dependencies": {
     "@rideshare/shared": "*",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.3",
+    "nodemailer": "^6.9.16",
+    "twilio": "^5.3.5"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }

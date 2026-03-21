@@ -32,11 +32,11 @@ This document describes the industry-grade project setup created for the RideSha
 | Service            | Port | Status        | Notes                          |
 |--------------------|------|---------------|---------------------------------|
 | user-service       | 3001 | Implemented   | Register, login, JWT, profile   |
-| ride-service       | 3002 | Skeleton     | Health + 501 placeholder        |
-| location-service   | 3003 | Skeleton     | Health + 501 placeholder       |
-| payment-service    | 3004 | Skeleton     | Health + 501 placeholder       |
-| notification-service | 3005 | Skeleton   | Health + 501 placeholder       |
-| analytics-service  | 3006 | Skeleton     | Health + 501 placeholder       |
+| ride-service       | 3002 | Implemented   | Rides, matching, fare, Kafka    |
+| location-service   | 3003 | Implemented   | Geospatial, Socket.IO, Redis    |
+| payment-service    | 3004 | Implemented   | Wallet, Stripe (mock optional), Kafka |
+| notification-service | 3005 | Implemented | Kafka ride+payment, in-app feed, channels |
+| analytics-service  | 3006 | Implemented  | Kafka aggregates, admin dashboard API |
 
 Each service has:
 
@@ -94,12 +94,14 @@ npm run user-service
 | `npm run docker:down` | Stop infra containers     |
 | `npm run gateway` | Start gateway                  |
 | `npm run user-service` | Start user service         |
+| `npm run notification-service` | Start notification service |
+| `npm run analytics-service` | Start analytics service (admin APIs) |
 
 ## Next steps (from readme roadmap)
 
 - **Sprint 1**: User service is in place; finish driver APIs, refresh token, Redis session if needed.
 - **Sprint 2**: Implement ride-service and location-service (matching, geospatial, Socket.IO, Kafka).
-- **Sprint 3**: Implement payment-service and notification-service.
+- **Sprint 3**: Payment-service is in place; notification-service implemented (configure SMTP/Twilio/FCM for real delivery).
 - **Sprint 4**: Analytics, monitoring, security harden, full CI/CD and deployment.
 
 See `readme.md` for the full 4-sprint plan and `CONTRIBUTING.md` for contribution guidelines.

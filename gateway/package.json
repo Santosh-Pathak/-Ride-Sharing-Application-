@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node src/app.js",
-    "dev": "node --watch src/app.js"
+    "dev": "node --watch src/app.js",
+    "test": "jest --config jest.config.cjs --runInBand",
+    "test:ci": "npm run test"
   },
   "dependencies": {
     "@rideshare/shared": "*",
@@ -13,5 +15,8 @@
     "express-rate-limit": "^7.1.5",
     "helmet": "^7.1.0",
     "http-proxy-middleware": "^2.0.6"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }

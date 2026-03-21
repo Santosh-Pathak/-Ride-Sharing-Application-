@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "node --watch src/app.js",
-    "test": "node --test tests/*.js tests/integration/*.js",
+    "test": "jest --config jest.config.cjs --runInBand",
     "test:ci": "npm run test"
   },
   "dependencies": {
