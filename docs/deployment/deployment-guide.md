@@ -30,6 +30,7 @@
    npm run gateway          # Terminal 1 - port 3000
    npm run user-service     # Terminal 2 - port 3001
    npm run notification-service   # optional - port 3005 (needs MongoDB + Kafka for full behavior)
+   npm run analytics-service    # optional - port 3006 (MongoDB + Kafka; admin JWT for /analytics/*)
    ```
 
 4. **Health checks**

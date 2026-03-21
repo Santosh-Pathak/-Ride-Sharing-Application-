@@ -36,7 +36,7 @@ This document describes the industry-grade project setup created for the RideSha
 | location-service   | 3003 | Implemented   | Geospatial, Socket.IO, Redis    |
 | payment-service    | 3004 | Implemented   | Wallet, Stripe (mock optional), Kafka |
 | notification-service | 3005 | Implemented | Kafka ride+payment, in-app feed, channels |
-| analytics-service  | 3006 | Skeleton     | Health + 501 placeholder       |
+| analytics-service  | 3006 | Implemented  | Kafka aggregates, admin dashboard API |
 
 Each service has:
 
@@ -95,6 +95,7 @@ npm run user-service
 | `npm run gateway` | Start gateway                  |
 | `npm run user-service` | Start user service         |
 | `npm run notification-service` | Start notification service |
+| `npm run analytics-service` | Start analytics service (admin APIs) |
 
 ## Next steps (from readme roadmap)
 
