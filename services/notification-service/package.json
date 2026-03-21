@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "node --watch src/app.js",
-    "test": "node --test tests/*.js",
+    "test": "jest --config jest.config.cjs --runInBand",
     "test:ci": "npm run test"
   },
   "dependencies": {
@@ -15,5 +15,8 @@
     "mongoose": "^8.0.3",
     "nodemailer": "^6.9.16",
     "twilio": "^5.3.5"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }
