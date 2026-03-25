@@ -1,5 +1,9 @@
 const { EVENTS } = require('@rideshare/shared');
-const { rideIncrements, paymentIncrements, parseDateKey } = require('../src/services/metrics.service');
+const {
+  rideIncrements,
+  paymentIncrements,
+  parseDateKey,
+} = require('../src/services/metrics.service');
 
 describe('analytics-service metrics helpers', () => {
   test('ride completed increments completed + revenue', () => {

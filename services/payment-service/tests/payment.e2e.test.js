@@ -90,7 +90,7 @@ describe('Payment Service E2E Tests', () => {
       const res = await request(app)
         .post('/payments/wallet/topup')
         .set('Authorization', `Bearer ${userToken}`)
-        .send({ amount: 25.50 });
+        .send({ amount: 25.5 });
 
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
@@ -113,9 +113,7 @@ describe('Payment Service E2E Tests', () => {
     });
 
     it('should return 401 without authentication', async () => {
-      const res = await request(app)
-        .post('/payments/wallet/topup')
-        .send({ amountCents: 1000 });
+      const res = await request(app).post('/payments/wallet/topup').send({ amountCents: 1000 });
 
       expect(res.status).toBe(401);
       expect(res.body.success).toBe(false);
@@ -172,9 +170,7 @@ describe('Payment Service E2E Tests', () => {
     });
 
     it('should return 401 without authentication', async () => {
-      const res = await request(app)
-        .post('/payments/wallet/withdraw')
-        .send({ amountCents: 1000 });
+      const res = await request(app).post('/payments/wallet/withdraw').send({ amountCents: 1000 });
 
       expect(res.status).toBe(401);
       expect(res.body.success).toBe(false);
@@ -356,9 +352,7 @@ describe('Payment Service E2E Tests', () => {
     });
 
     it('should return 401 without authentication', async () => {
-      const res = await request(app)
-        .post('/payments/payments/intent')
-        .send({ amountCents: 1000 });
+      const res = await request(app).post('/payments/payments/intent').send({ amountCents: 1000 });
 
       expect(res.status).toBe(401);
       expect(res.body.success).toBe(false);

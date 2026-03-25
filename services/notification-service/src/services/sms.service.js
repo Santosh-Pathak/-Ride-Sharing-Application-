@@ -4,7 +4,11 @@
 const { logger } = require('@rideshare/shared');
 
 function isConfigured() {
-  return !!(process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN && process.env.TWILIO_FROM_NUMBER);
+  return !!(
+    process.env.TWILIO_ACCOUNT_SID &&
+    process.env.TWILIO_AUTH_TOKEN &&
+    process.env.TWILIO_FROM_NUMBER
+  );
 }
 
 async function sendSms({ to, body }) {

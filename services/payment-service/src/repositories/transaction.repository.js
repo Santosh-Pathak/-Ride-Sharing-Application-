@@ -1,6 +1,13 @@
 const { query } = require('../config/db.config');
 
-async function createTransaction({ userId, type, amountCents, balanceAfterCents, paymentId = null, description = null }) {
+async function createTransaction({
+  userId,
+  type,
+  amountCents,
+  balanceAfterCents,
+  paymentId = null,
+  description = null,
+}) {
   const res = await query(
     `INSERT INTO transactions (user_id, type, amount_cents, balance_after_cents, payment_id, description)
      VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,

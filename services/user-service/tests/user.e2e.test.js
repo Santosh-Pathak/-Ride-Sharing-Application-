@@ -63,9 +63,7 @@ describe('User Service E2E Tests', () => {
     });
 
     it('should return 400 for missing required fields', async () => {
-      const res = await request(app)
-        .post('/auth/register')
-        .send({ email: 'incomplete@test.com' });
+      const res = await request(app).post('/auth/register').send({ email: 'incomplete@test.com' });
 
       expect(res.status).toBe(400);
       expect(res.body.success).toBe(false);
@@ -123,9 +121,7 @@ describe('User Service E2E Tests', () => {
     });
 
     it('should return 400 for missing credentials', async () => {
-      const res = await request(app)
-        .post('/auth/login')
-        .send({});
+      const res = await request(app).post('/auth/login').send({});
 
       expect(res.status).toBe(400);
       expect(res.body.success).toBe(false);
@@ -134,9 +130,7 @@ describe('User Service E2E Tests', () => {
 
   describe('POST /auth/refresh', () => {
     it('should refresh tokens with valid refresh token', async () => {
-      const res = await request(app)
-        .post('/auth/refresh')
-        .send({ refreshToken });
+      const res = await request(app).post('/auth/refresh').send({ refreshToken });
 
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
@@ -149,18 +143,14 @@ describe('User Service E2E Tests', () => {
     });
 
     it('should return 400 for missing refresh token', async () => {
-      const res = await request(app)
-        .post('/auth/refresh')
-        .send({});
+      const res = await request(app).post('/auth/refresh').send({});
 
       expect(res.status).toBe(400);
       expect(res.body.success).toBe(false);
     });
 
     it('should return 401 for invalid refresh token', async () => {
-      const res = await request(app)
-        .post('/auth/refresh')
-        .send({ refreshToken: 'invalid-token' });
+      const res = await request(app).post('/auth/refresh').send({ refreshToken: 'invalid-token' });
 
       expect(res.status).toBe(401);
       expect(res.body.success).toBe(false);
@@ -169,9 +159,7 @@ describe('User Service E2E Tests', () => {
 
   describe('GET /auth/me', () => {
     it('should return user info with valid token', async () => {
-      const res = await request(app)
-        .get('/auth/me')
-        .set('Authorization', `Bearer ${accessToken}`);
+      const res = await request(app).get('/auth/me').set('Authorization', `Bearer ${accessToken}`);
 
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
@@ -188,9 +176,7 @@ describe('User Service E2E Tests', () => {
     });
 
     it('should return 401 with invalid token', async () => {
-      const res = await request(app)
-        .get('/auth/me')
-        .set('Authorization', 'Bearer invalid-token');
+      const res = await request(app).get('/auth/me').set('Authorization', 'Bearer invalid-token');
 
       expect(res.status).toBe(401);
       expect(res.body.success).toBe(false);
@@ -231,9 +217,7 @@ describe('User Service E2E Tests', () => {
     });
 
     it('should return 401 without authentication', async () => {
-      const res = await request(app)
-        .patch('/users/profile')
-        .send({ name: 'New Name' });
+      const res = await request(app).patch('/users/profile').send({ name: 'New Name' });
 
       expect(res.status).toBe(401);
       expect(res.body.success).toBe(false);
@@ -261,11 +245,7 @@ describe('User Service E2E Tests', () => {
 
   describe('POST /drivers/register', () => {
     beforeAll(async () => {
-      await User.findOneAndUpdate(
-        { email: testEmail },
-        { isActive: true },
-        { new: true }
-      );
+      await User.findOneAndUpdate({ email: testEmail }, { isActive: true }, { new: true });
     });
 
     it('should register as driver successfully', async () => {
@@ -304,9 +284,7 @@ describe('User Service E2E Tests', () => {
     });
 
     it('should return 401 without authentication', async () => {
-      const res = await request(app)
-        .post('/drivers/register')
-        .send({ licenseNumber: 'DL999' });
+      const res = await request(app).post('/drivers/register').send({ licenseNumber: 'DL999' });
 
       expect(res.status).toBe(401);
       expect(res.body.success).toBe(false);
@@ -417,9 +395,7 @@ describe('User Service E2E Tests', () => {
     });
 
     it('should return 401 without authentication', async () => {
-      const res = await request(app)
-        .patch('/drivers/me/availability')
-        .send({ isAvailable: true });
+      const res = await request(app).patch('/drivers/me/availability').send({ isAvailable: true });
 
       expect(res.status).toBe(401);
       expect(res.body.success).toBe(false);
@@ -438,9 +414,7 @@ describe('User Service E2E Tests', () => {
 
     it('should reject oversized payload', async () => {
       const largePayload = { email: testEmail, password: testPassword, name: 'A'.repeat(10000) };
-      const res = await request(app)
-        .post('/auth/register')
-        .send(largePayload);
+      const res = await request(app).post('/auth/register').send(largePayload);
 
       expect(res.status).toBe(400);
     });

@@ -1,10 +1,26 @@
 const { query } = require('../config/db.config');
 
-async function createPayment({ userId, rideId, amountCents, currency = 'USD', status = 'pending', externalId = null, metadata = null }) {
+async function createPayment({
+  userId,
+  rideId,
+  amountCents,
+  currency = 'USD',
+  status = 'pending',
+  externalId = null,
+  metadata = null,
+}) {
   const res = await query(
     `INSERT INTO payments (user_id, ride_id, amount_cents, currency, status, external_id, metadata)
      VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
-    [userId, rideId, amountCents, currency, status, externalId, metadata ? JSON.stringify(metadata) : null]
+    [
+      userId,
+      rideId,
+      amountCents,
+      currency,
+      status,
+      externalId,
+      metadata ? JSON.stringify(metadata) : null,
+    ]
   );
   return res.rows[0];
 }

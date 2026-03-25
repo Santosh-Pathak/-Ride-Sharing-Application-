@@ -86,9 +86,7 @@ describe('User Service Integration Tests', () => {
     });
 
     it('GET /users/profile returns user when authenticated', async () => {
-      const res = await request(app)
-        .get('/users/profile')
-        .set('Authorization', `Bearer ${token}`);
+      const res = await request(app).get('/users/profile').set('Authorization', `Bearer ${token}`);
 
       expect(res.status).toBe(200);
       expect(res.body.data.user.email).toBe(TEST_EMAIL);
@@ -100,9 +98,7 @@ describe('User Service Integration Tests', () => {
         .send({ email: TEST_EMAIL, password: TEST_PASSWORD });
       const refreshToken = loginRes.body.data.refreshToken;
 
-      const res = await request(app)
-        .post('/auth/refresh')
-        .send({ refreshToken });
+      const res = await request(app).post('/auth/refresh').send({ refreshToken });
 
       expect(res.status).toBe(200);
       expect(res.body.data.accessToken).toBeDefined();
@@ -113,7 +109,10 @@ describe('User Service Integration Tests', () => {
       const res = await request(app)
         .post('/drivers/register')
         .set('Authorization', `Bearer ${token}`)
-        .send({ licenseNumber: 'DL123', vehicleInfo: { make: 'Toyota', model: 'Camry', year: 2020 } });
+        .send({
+          licenseNumber: 'DL123',
+          vehicleInfo: { make: 'Toyota', model: 'Camry', year: 2020 },
+        });
 
       expect(res.status).toBe(201);
       expect(res.body.data.driver.licenseNumber).toBe('DL123');
@@ -123,9 +122,7 @@ describe('User Service Integration Tests', () => {
     });
 
     it('GET /drivers/me returns driver profile', async () => {
-      const res = await request(app)
-        .get('/drivers/me')
-        .set('Authorization', `Bearer ${token}`);
+      const res = await request(app).get('/drivers/me').set('Authorization', `Bearer ${token}`);
 
       expect(res.status).toBe(200);
       expect(res.body.data.driver.licenseNumber).toBe('DL123');

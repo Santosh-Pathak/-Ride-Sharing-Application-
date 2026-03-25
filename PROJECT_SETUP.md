@@ -29,14 +29,14 @@ This document describes the industry-grade project setup created for the RideSha
 
 ### Microservices (`services/`)
 
-| Service            | Port | Status        | Notes                          |
-|--------------------|------|---------------|---------------------------------|
-| user-service       | 3001 | Implemented   | Register, login, JWT, profile   |
-| ride-service       | 3002 | Implemented   | Rides, matching, fare, Kafka    |
-| location-service   | 3003 | Implemented   | Geospatial, Socket.IO, Redis    |
-| payment-service    | 3004 | Implemented   | Wallet, Stripe (mock optional), Kafka |
+| Service              | Port | Status      | Notes                                     |
+| -------------------- | ---- | ----------- | ----------------------------------------- |
+| user-service         | 3001 | Implemented | Register, login, JWT, profile             |
+| ride-service         | 3002 | Implemented | Rides, matching, fare, Kafka              |
+| location-service     | 3003 | Implemented | Geospatial, Socket.IO, Redis              |
+| payment-service      | 3004 | Implemented | Wallet, Stripe (mock optional), Kafka     |
 | notification-service | 3005 | Implemented | Kafka ride+payment, in-app feed, channels |
-| analytics-service  | 3006 | Implemented  | Kafka aggregates, admin dashboard API |
+| analytics-service    | 3006 | Implemented | Kafka aggregates, admin dashboard API     |
 
 Each service has:
 
@@ -75,27 +75,27 @@ npm run gateway
 npm run user-service
 ```
 
-- Gateway: http://localhost:3000/health  
-- User service: http://localhost:3001/health  
-- Register: `POST http://localhost:3000/auth/register` with `{ "email", "password", "name" }`  
+- Gateway: http://localhost:3000/health
+- User service: http://localhost:3001/health
+- Register: `POST http://localhost:3000/auth/register` with `{ "email", "password", "name" }`
 - Login: `POST http://localhost:3000/auth/login` with `{ "email", "password" }`
 
 ## Commands
 
-| Command           | Description                    |
-|-------------------|--------------------------------|
-| `npm run lint`    | ESLint                         |
-| `npm run lint:fix`| ESLint with auto-fix           |
-| `npm run format`  | Prettier write                 |
-| `npm run format:check` | Prettier check           |
-| `npm run test`    | Run tests in all workspaces    |
-| `npm run test:ci` | Same, for CI                   |
-| `npm run docker:up`   | Start infra containers     |
-| `npm run docker:down` | Stop infra containers     |
-| `npm run gateway` | Start gateway                  |
-| `npm run user-service` | Start user service         |
-| `npm run notification-service` | Start notification service |
-| `npm run analytics-service` | Start analytics service (admin APIs) |
+| Command                        | Description                          |
+| ------------------------------ | ------------------------------------ |
+| `npm run lint`                 | ESLint                               |
+| `npm run lint:fix`             | ESLint with auto-fix                 |
+| `npm run format`               | Prettier write                       |
+| `npm run format:check`         | Prettier check                       |
+| `npm run test`                 | Run tests in all workspaces          |
+| `npm run test:ci`              | Same, for CI                         |
+| `npm run docker:up`            | Start infra containers               |
+| `npm run docker:down`          | Stop infra containers                |
+| `npm run gateway`              | Start gateway                        |
+| `npm run user-service`         | Start user service                   |
+| `npm run notification-service` | Start notification service           |
+| `npm run analytics-service`    | Start analytics service (admin APIs) |
 
 ## Next steps (from readme roadmap)
 

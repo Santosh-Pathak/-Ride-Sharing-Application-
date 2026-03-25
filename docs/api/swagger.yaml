@@ -77,7 +77,7 @@ paths:
       summary: Deactivate my profile (auth required)
   /users/profile/avatar:
     post:
-      summary: Upload avatar image (multipart/form-data, field: avatar)
+      summary: 'Upload avatar image (multipart/form-data, field: avatar)'
   /drivers/register:
     post:
       summary: Register as driver (auth required)
@@ -99,10 +99,10 @@ paths:
       summary: Update my driver profile
   /drivers/me/availability:
     patch:
-      summary: Set availability (isAvailable: boolean)
+      summary: 'Set availability (isAvailable: boolean)'
   /drivers/documents/license:
     post:
-      summary: Upload license document (multipart, field: license)
+      summary: 'Upload license document (multipart, field: license)'
   # Location service (Day 3)
   /location:
     put:
@@ -126,7 +126,7 @@ paths:
       summary: Set driver offline (driver auth required)
   /location/nearby:
     get:
-      summary: Get nearby drivers (query: lat, lng, radiusKm?, limit?)
+      summary: 'Get nearby drivers (query: lat, lng, radiusKm?, limit?)'
       parameters:
         - name: lat
           in: query
@@ -147,7 +147,7 @@ paths:
       summary: Get a driver's current location
   /location/eta:
     get:
-      summary: Get ETA between two points (query: fromLat, fromLng, toLat, toLng, avgSpeedKmh?)
+      summary: 'Get ETA between two points (query: fromLat, fromLng, toLat, toLng, avgSpeedKmh?)'
       parameters:
         - name: fromLat
           in: query
@@ -184,43 +184,43 @@ paths:
         '201':
           description: Ride created (requested or matched)
     get:
-      summary: Get my rides (query: asRider, asDriver, limit)
+      summary: 'Get my rides (query: asRider, asDriver, limit)'
   /rides/{id}:
     get:
       summary: Get ride by id (rider/driver/admin)
   /rides/{id}/cancel:
     post:
-      summary: Cancel ride (body: reason?)
+      summary: 'Cancel ride (body: reason?)'
   /rides/{id}/accept:
     post:
       summary: Driver accept ride
   /rides/{id}/reject:
     post:
-      summary: Driver reject ride (body: reason?)
+      summary: 'Driver reject ride (body: reason?)'
   /rides/{id}/start:
     post:
       summary: Driver start ride
   /rides/{id}/complete:
     post:
-      summary: Driver complete ride (body: distanceKm?, durationMin?)
+      summary: 'Driver complete ride (body: distanceKm?, durationMin?)'
   # Payment service (Day 5)
   /payments/wallet:
     get:
-      summary: Get my wallet (balance)
+      summary: 'Get my wallet (balance)'
     post:
-      summary: (use /payments/wallet/topup or /payments/wallet/withdraw)
+      summary: '(use /payments/wallet/topup or /payments/wallet/withdraw)'
   /payments/wallet/topup:
     post:
-      summary: Top up wallet (body: amountCents or amount, description?)
+      summary: 'Top up wallet (body: amountCents or amount, description?)'
   /payments/wallet/withdraw:
     post:
-      summary: Withdraw from wallet (body: amountCents or amount, description?)
+      summary: 'Withdraw from wallet (body: amountCents or amount, description?)'
   /payments/transactions:
     get:
-      summary: Get my transaction history (query: limit?, offset?)
+      summary: 'Get my transaction history (query: limit?, offset?)'
   /payments/payments:
     get:
-      summary: Get my payments list (query: limit?)
+      summary: 'Get my payments list (query: limit?)'
   /payments/payments/{id}:
     get:
       summary: Get payment by id
@@ -229,7 +229,7 @@ paths:
       summary: Get invoice for payment
   /payments/payments/{id}/refund:
     post:
-      summary: Refund payment (body: amountCents? or amount?)
+      summary: 'Refund payment (body: amountCents? or amount?)'
   /payments/payments/intent:
     post:
-      summary: Create Stripe payment intent (body: amountCents or amount, metadata?)
+      summary: 'Create Stripe payment intent (body: amountCents or amount, metadata?)'

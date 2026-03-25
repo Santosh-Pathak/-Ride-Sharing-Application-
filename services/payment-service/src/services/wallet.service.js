@@ -17,7 +17,9 @@ async function topUp(userId, amountCents, description = 'Wallet top-up') {
   const client = await getClient();
   try {
     await client.query('BEGIN');
-    let wallet = await client.query('SELECT * FROM wallets WHERE user_id = $1 FOR UPDATE', [userId]);
+    let wallet = await client.query('SELECT * FROM wallets WHERE user_id = $1 FOR UPDATE', [
+      userId,
+    ]);
     if (wallet.rows.length === 0) {
       await client.query(
         'INSERT INTO wallets (user_id, balance_cents, currency) VALUES ($1, 0, $2)',
@@ -27,10 +29,10 @@ async function topUp(userId, amountCents, description = 'Wallet top-up') {
     }
     const current = Number(wallet.rows[0].balance_cents);
     const newBalance = current + amountCents;
-    await client.query('UPDATE wallets SET balance_cents = $2, updated_at = NOW() WHERE user_id = $1', [
-      userId,
-      newBalance,
-    ]);
+    await client.query(
+      'UPDATE wallets SET balance_cents = $2, updated_at = NOW() WHERE user_id = $1',
+      [userId, newBalance]
+    );
     await client.query(
       `INSERT INTO transactions (user_id, type, amount_cents, balance_after_cents, description)
        VALUES ($1, 'credit', $2, $3, $4)`,
@@ -51,15 +53,18 @@ async function withdraw(userId, amountCents, description = 'Withdrawal') {
   const client = await getClient();
   try {
     await client.query('BEGIN');
-    const wallet = await client.query('SELECT * FROM wallets WHERE user_id = $1 FOR UPDATE', [userId]);
+    const wallet = await client.query('SELECT * FROM wallets WHERE user_id = $1 FOR UPDATE', [
+      userId,
+    ]);
     if (wallet.rows.length === 0) throw new AppError('Wallet not found', 404, 'NOT_FOUND');
     const current = Number(wallet.rows[0].balance_cents);
-    if (current < amountCents) throw new AppError('Insufficient balance', 400, 'INSUFFICIENT_BALANCE');
+    if (current < amountCents)
+      throw new AppError('Insufficient balance', 400, 'INSUFFICIENT_BALANCE');
     const newBalance = current - amountCents;
-    await client.query('UPDATE wallets SET balance_cents = $2, updated_at = NOW() WHERE user_id = $1', [
-      userId,
-      newBalance,
-    ]);
+    await client.query(
+      'UPDATE wallets SET balance_cents = $2, updated_at = NOW() WHERE user_id = $1',
+      [userId, newBalance]
+    );
     await client.query(
       `INSERT INTO transactions (user_id, type, amount_cents, balance_after_cents, description)
        VALUES ($1, 'debit', $2, $3, $4)`,

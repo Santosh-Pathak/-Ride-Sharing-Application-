@@ -1,8 +1,5 @@
 const { EVENTS } = require('@rideshare/shared');
-const {
-  buildRideDispatch,
-  buildPaymentDispatch,
-} = require('../src/services/notification.service');
+const { buildRideDispatch, buildPaymentDispatch } = require('../src/services/notification.service');
 
 describe('notification-service dispatch builders', () => {
   test('ride matched notifies rider and driver', () => {

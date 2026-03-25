@@ -28,7 +28,9 @@ async function initDb() {
 
 async function start() {
   await initDb();
-  runPaymentConsumer().catch((err) => logger.error('Payment consumer failed', { error: err.message }));
+  runPaymentConsumer().catch((err) =>
+    logger.error('Payment consumer failed', { error: err.message })
+  );
   app.listen(PORT, () => {
     logger.info(`Payment service listening on port ${PORT}`);
   });

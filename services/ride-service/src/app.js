@@ -25,7 +25,9 @@ async function start() {
     logger.info(`Ride service listening on port ${PORT}`);
   });
   setInterval(() => {
-    releaseTimedOutMatches().catch((err) => logger.error('Timeout job failed', { error: err.message }));
+    releaseTimedOutMatches().catch((err) =>
+      logger.error('Timeout job failed', { error: err.message })
+    );
   }, ACCEPTANCE_TIMEOUT_CHECK_MS);
 }
 

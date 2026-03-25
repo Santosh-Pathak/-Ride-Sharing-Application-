@@ -102,9 +102,7 @@ describe('Ride Service E2E Tests', () => {
 
   describe('GET /rides', () => {
     it('should return rides for authenticated user', async () => {
-      const res = await request(app)
-        .get('/rides')
-        .set('Authorization', `Bearer ${riderToken}`);
+      const res = await request(app).get('/rides').set('Authorization', `Bearer ${riderToken}`);
 
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
@@ -234,9 +232,7 @@ describe('Ride Service E2E Tests', () => {
     });
 
     it('should return 401 without authentication', async () => {
-      const res = await request(app)
-        .post(`/rides/${rideId}/cancel`)
-        .send({ reason: 'Cancel' });
+      const res = await request(app).post(`/rides/${rideId}/cancel`).send({ reason: 'Cancel' });
 
       expect(res.status).toBe(401);
     });
@@ -318,9 +314,7 @@ describe('Ride Service E2E Tests', () => {
     });
 
     it('should return 401 without authentication', async () => {
-      const res = await request(app)
-        .post(`/rides/${rideId}/reject`)
-        .send({ reason: 'Too far' });
+      const res = await request(app).post(`/rides/${rideId}/reject`).send({ reason: 'Too far' });
 
       expect(res.status).toBe(401);
     });

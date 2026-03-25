@@ -19,7 +19,9 @@ app.use(errorHandler);
 
 async function start() {
   await connectDB();
-  runRideConsumer().catch((err) => logger.error('Analytics ride consumer failed', { error: err.message }));
+  runRideConsumer().catch((err) =>
+    logger.error('Analytics ride consumer failed', { error: err.message })
+  );
   runPaymentConsumer().catch((err) =>
     logger.error('Analytics payment consumer failed', { error: err.message })
   );

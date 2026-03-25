@@ -65,9 +65,7 @@ describe('Ride Service Integration Tests', () => {
   describe('GET /rides', () => {
     it('returns my rides', async () => {
       const token = tokenFor('rider-integration-1', 'rider');
-      const res = await request(app)
-        .get('/rides')
-        .set('Authorization', `Bearer ${token}`);
+      const res = await request(app).get('/rides').set('Authorization', `Bearer ${token}`);
 
       expect(res.status).toBe(200);
       expect(Array.isArray(res.body.data.rides)).toBe(true);

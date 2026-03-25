@@ -41,7 +41,13 @@ function validateNearbyQuery(req, res, next) {
 function validateEtaQuery(req, res, next) {
   const { fromLat, fromLng, toLat, toLng } = req.query;
   if (!fromLat || !fromLng || !toLat || !toLng) {
-    return next(new AppError('Query params fromLat, fromLng, toLat, toLng are required', 400, 'VALIDATION_ERROR'));
+    return next(
+      new AppError(
+        'Query params fromLat, fromLng, toLat, toLng are required',
+        400,
+        'VALIDATION_ERROR'
+      )
+    );
   }
   next();
 }

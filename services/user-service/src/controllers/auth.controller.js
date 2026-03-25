@@ -26,7 +26,9 @@ async function register(req, res, next) {
     if (existing) throw new AppError('Email already registered', 400, 'CONFLICT');
     const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
     const user = await User.create({ email, passwordHash, name, phone, role });
-    const accessToken = jwt.sign(buildTokenPayload(user), JWT_SECRET, { expiresIn: ACCESS_TOKEN_EXPIRY });
+    const accessToken = jwt.sign(buildTokenPayload(user), JWT_SECRET, {
+      expiresIn: ACCESS_TOKEN_EXPIRY,
+    });
     const refreshTokenId = await storeRefreshToken(user._id.toString());
     res.status(201).json({
       success: true,
@@ -49,7 +51,9 @@ async function login(req, res, next) {
     if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
       throw new AppError('Invalid email or password', 401, 'UNAUTHORIZED');
     }
-    const accessToken = jwt.sign(buildTokenPayload(user), JWT_SECRET, { expiresIn: ACCESS_TOKEN_EXPIRY });
+    const accessToken = jwt.sign(buildTokenPayload(user), JWT_SECRET, {
+      expiresIn: ACCESS_TOKEN_EXPIRY,
+    });
     const refreshTokenId = await storeRefreshToken(user._id.toString());
     res.json({
       success: true,
@@ -72,8 +76,11 @@ async function refresh(req, res, next) {
     const payload = await validateAndConsumeRefreshToken(refreshToken);
     if (!payload) throw new AppError('Invalid or expired refresh token', 401, 'UNAUTHORIZED');
     const user = await User.findById(payload.userId).select('-passwordHash');
-    if (!user || !user.isActive) throw new AppError('User not found or inactive', 401, 'UNAUTHORIZED');
-    const accessToken = jwt.sign(buildTokenPayload(user), JWT_SECRET, { expiresIn: ACCESS_TOKEN_EXPIRY });
+    if (!user || !user.isActive)
+      throw new AppError('User not found or inactive', 401, 'UNAUTHORIZED');
+    const accessToken = jwt.sign(buildTokenPayload(user), JWT_SECRET, {
+      expiresIn: ACCESS_TOKEN_EXPIRY,
+    });
     const newRefreshTokenId = await storeRefreshToken(user._id.toString());
     res.json({
       success: true,

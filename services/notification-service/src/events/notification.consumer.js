@@ -5,7 +5,8 @@ const notificationService = require('../services/notification.service');
 const RIDE_TOPIC = process.env.KAFKA_RIDE_TOPIC || 'ride-events';
 const PAYMENT_TOPIC = process.env.KAFKA_PAYMENT_TOPIC || 'payment-events';
 const RIDE_GROUP = process.env.KAFKA_NOTIFICATION_RIDE_GROUP_ID || 'notification-service-rides';
-const PAYMENT_GROUP = process.env.KAFKA_NOTIFICATION_PAYMENT_GROUP_ID || 'notification-service-payments';
+const PAYMENT_GROUP =
+  process.env.KAFKA_NOTIFICATION_PAYMENT_GROUP_ID || 'notification-service-payments';
 
 const RIDE_EVENTS = new Set([
   EVENTS.RIDE_REQUESTED,

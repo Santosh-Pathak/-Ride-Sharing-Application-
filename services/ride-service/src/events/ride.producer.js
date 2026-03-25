@@ -10,31 +10,59 @@ function toPayload(ride) {
 }
 
 async function publishRideRequested(ride) {
-  await kafka.send(RIDE_TOPIC, { event: EVENTS.RIDE_REQUESTED, ride: toPayload(ride) }, ride._id?.toString());
+  await kafka.send(
+    RIDE_TOPIC,
+    { event: EVENTS.RIDE_REQUESTED, ride: toPayload(ride) },
+    ride._id?.toString()
+  );
 }
 
 async function publishRideMatched(ride) {
-  await kafka.send(RIDE_TOPIC, { event: EVENTS.RIDE_MATCHED, ride: toPayload(ride) }, ride._id?.toString());
+  await kafka.send(
+    RIDE_TOPIC,
+    { event: EVENTS.RIDE_MATCHED, ride: toPayload(ride) },
+    ride._id?.toString()
+  );
 }
 
 async function publishRideAccepted(ride) {
-  await kafka.send(RIDE_TOPIC, { event: EVENTS.RIDE_ACCEPTED, ride: toPayload(ride) }, ride._id?.toString());
+  await kafka.send(
+    RIDE_TOPIC,
+    { event: EVENTS.RIDE_ACCEPTED, ride: toPayload(ride) },
+    ride._id?.toString()
+  );
 }
 
 async function publishRideRejected(ride, reason) {
-  await kafka.send(RIDE_TOPIC, { event: EVENTS.RIDE_REJECTED, ride: toPayload(ride), reason }, ride._id?.toString());
+  await kafka.send(
+    RIDE_TOPIC,
+    { event: EVENTS.RIDE_REJECTED, ride: toPayload(ride), reason },
+    ride._id?.toString()
+  );
 }
 
 async function publishRideStarted(ride) {
-  await kafka.send(RIDE_TOPIC, { event: EVENTS.RIDE_STARTED, ride: toPayload(ride) }, ride._id?.toString());
+  await kafka.send(
+    RIDE_TOPIC,
+    { event: EVENTS.RIDE_STARTED, ride: toPayload(ride) },
+    ride._id?.toString()
+  );
 }
 
 async function publishRideCompleted(ride) {
-  await kafka.send(RIDE_TOPIC, { event: EVENTS.RIDE_COMPLETED, ride: toPayload(ride) }, ride._id?.toString());
+  await kafka.send(
+    RIDE_TOPIC,
+    { event: EVENTS.RIDE_COMPLETED, ride: toPayload(ride) },
+    ride._id?.toString()
+  );
 }
 
 async function publishRideCancelled(ride, reason) {
-  await kafka.send(RIDE_TOPIC, { event: EVENTS.RIDE_CANCELLED, ride: toPayload(ride), reason }, ride._id?.toString());
+  await kafka.send(
+    RIDE_TOPIC,
+    { event: EVENTS.RIDE_CANCELLED, ride: toPayload(ride), reason },
+    ride._id?.toString()
+  );
 }
 
 module.exports = {

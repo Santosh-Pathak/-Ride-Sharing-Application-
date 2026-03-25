@@ -31,9 +31,7 @@ describe('Location Service Integration Tests', () => {
     });
 
     it('returns 200 and drivers array with lat,lng', async () => {
-      const res = await request(app)
-        .get('/location/nearby')
-        .query({ lat: 40.7128, lng: -74.006 });
+      const res = await request(app).get('/location/nearby').query({ lat: 40.7128, lng: -74.006 });
 
       expect(res.status).toBe(200);
       expect(Array.isArray(res.body.data.drivers)).toBe(true);
@@ -54,9 +52,7 @@ describe('Location Service Integration Tests', () => {
 
   describe('PUT /location', () => {
     it('returns 401 without auth', async () => {
-      const res = await request(app)
-        .put('/location')
-        .send({ lat: 40.71, lng: -74.0 });
+      const res = await request(app).put('/location').send({ lat: 40.71, lng: -74.0 });
       expect(res.status).toBe(401);
     });
   });

@@ -10,7 +10,8 @@ const { haversineKm, etaMinutes } = require('./geospatial.service');
 const { AppError } = require('@rideshare/shared');
 
 function validateCoords(lat, lng) {
-  if (lat == null || lng == null) throw new AppError('lat and lng are required', 400, 'VALIDATION_ERROR');
+  if (lat == null || lng == null)
+    throw new AppError('lat and lng are required', 400, 'VALIDATION_ERROR');
   const latN = Number(lat);
   const lngN = Number(lng);
   if (Number.isNaN(latN) || latN < -90 || latN > 90) {

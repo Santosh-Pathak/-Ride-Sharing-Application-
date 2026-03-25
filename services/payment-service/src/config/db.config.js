@@ -2,8 +2,7 @@ const { Pool } = require('pg');
 const { logger } = require('@rideshare/shared');
 
 const DATABASE_URL =
-  process.env.DATABASE_URL ||
-  'postgresql://rideshare:rideshare_secret@localhost:5432/rideshare';
+  process.env.DATABASE_URL || 'postgresql://rideshare:rideshare_secret@localhost:5432/rideshare';
 
 const pool = new Pool({
   connectionString: DATABASE_URL,

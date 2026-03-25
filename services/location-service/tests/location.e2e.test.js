@@ -48,9 +48,7 @@ describe('Location Service E2E Tests', () => {
     });
 
     it('should return 401 without authentication', async () => {
-      const res = await request(app)
-        .put('/location')
-        .send({ lat: 40.7128, lng: -74.006 });
+      const res = await request(app).put('/location').send({ lat: 40.7128, lng: -74.006 });
 
       expect(res.status).toBe(401);
       expect(res.body.success).toBe(false);
@@ -183,9 +181,7 @@ describe('Location Service E2E Tests', () => {
     });
 
     it('should return nearby drivers with valid coordinates', async () => {
-      const res = await request(app)
-        .get('/location/nearby')
-        .query({ lat: 40.7128, lng: -74.006 });
+      const res = await request(app).get('/location/nearby').query({ lat: 40.7128, lng: -74.006 });
 
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
@@ -212,18 +208,14 @@ describe('Location Service E2E Tests', () => {
     });
 
     it('should return 400 without lat parameter', async () => {
-      const res = await request(app)
-        .get('/location/nearby')
-        .query({ lng: -74.006 });
+      const res = await request(app).get('/location/nearby').query({ lng: -74.006 });
 
       expect(res.status).toBe(400);
       expect(res.body.success).toBe(false);
     });
 
     it('should return 400 without lng parameter', async () => {
-      const res = await request(app)
-        .get('/location/nearby')
-        .query({ lat: 40.7128 });
+      const res = await request(app).get('/location/nearby').query({ lat: 40.7128 });
 
       expect(res.status).toBe(400);
       expect(res.body.success).toBe(false);
@@ -248,18 +240,14 @@ describe('Location Service E2E Tests', () => {
     });
 
     it('should return 400 for lat out of range', async () => {
-      const res = await request(app)
-        .get('/location/nearby')
-        .query({ lat: 95, lng: -74.006 });
+      const res = await request(app).get('/location/nearby').query({ lat: 95, lng: -74.006 });
 
       expect(res.status).toBe(400);
       expect(res.body.success).toBe(false);
     });
 
     it('should return 400 for lng out of range', async () => {
-      const res = await request(app)
-        .get('/location/nearby')
-        .query({ lat: 40.7128, lng: -200 });
+      const res = await request(app).get('/location/nearby').query({ lat: 40.7128, lng: -200 });
 
       expect(res.status).toBe(400);
       expect(res.body.success).toBe(false);
@@ -411,9 +399,7 @@ describe('Location Service E2E Tests', () => {
     });
 
     it('should handle nearby search at boundary coordinates', async () => {
-      const res = await request(app)
-        .get('/location/nearby')
-        .query({ lat: -90, lng: 180 });
+      const res = await request(app).get('/location/nearby').query({ lat: -90, lng: 180 });
 
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);

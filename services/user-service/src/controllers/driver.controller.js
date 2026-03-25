@@ -25,7 +25,10 @@ async function registerDriver(req, res, next) {
 
 async function getMyDriverProfile(req, res, next) {
   try {
-    const driver = await Driver.findOne({ userId: req.user.userId }).populate('userId', 'name email phone');
+    const driver = await Driver.findOne({ userId: req.user.userId }).populate(
+      'userId',
+      'name email phone'
+    );
     if (!driver) throw new AppError('Driver profile not found', 404, 'NOT_FOUND');
     res.json({ success: true, data: { driver } });
   } catch (err) {
@@ -42,7 +45,9 @@ async function updateDriverProfile(req, res, next) {
     if (vehicleInfo && typeof vehicleInfo === 'object') {
       update.vehicleInfo = vehicleInfo;
     }
-    const driver = await Driver.findOneAndUpdate({ userId: req.user.userId }, update, { new: true });
+    const driver = await Driver.findOneAndUpdate({ userId: req.user.userId }, update, {
+      new: true,
+    });
     if (!driver) throw new AppError('Driver profile not found', 404, 'NOT_FOUND');
     res.json({ success: true, data: { driver } });
   } catch (err) {

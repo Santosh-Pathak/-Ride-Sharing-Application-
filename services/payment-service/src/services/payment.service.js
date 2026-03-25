@@ -16,14 +16,18 @@ async function processRidePayment(rideId, riderId, amountCents) {
   const client = await getClient();
   try {
     await client.query('BEGIN');
-    const walletRes = await client.query('SELECT * FROM wallets WHERE user_id = $1 FOR UPDATE', [riderId]);
+    const walletRes = await client.query('SELECT * FROM wallets WHERE user_id = $1 FOR UPDATE', [
+      riderId,
+    ]);
     if (walletRes.rows.length === 0) {
-      await client.query('INSERT INTO wallets (user_id, balance_cents, currency) VALUES ($1, 0, $2)', [
-        riderId,
-        'USD',
-      ]);
+      await client.query(
+        'INSERT INTO wallets (user_id, balance_cents, currency) VALUES ($1, 0, $2)',
+        [riderId, 'USD']
+      );
     }
-    const wallet = (await client.query('SELECT * FROM wallets WHERE user_id = $1 FOR UPDATE', [riderId])).rows[0];
+    const wallet = (
+      await client.query('SELECT * FROM wallets WHERE user_id = $1 FOR UPDATE', [riderId])
+    ).rows[0];
     const balanceCents = Number(wallet.balance_cents);
     if (balanceCents < amountCents) {
       await client.query('ROLLBACK');
@@ -35,7 +39,12 @@ async function processRidePayment(rideId, riderId, amountCents) {
         metadata: { reason: 'insufficient_balance' },
       });
       try {
-        await kafka.send(PAYMENT_TOPIC, { event: EVENTS.PAYMENT_FAILED, paymentId: payment.id, rideId, userId: riderId });
+        await kafka.send(PAYMENT_TOPIC, {
+          event: EVENTS.PAYMENT_FAILED,
+          paymentId: payment.id,
+          rideId,
+          userId: riderId,
+        });
       } catch (e) {
         logger.warn('Kafka payment.failed send failed', { error: e.message });
       }
@@ -48,10 +57,10 @@ async function processRidePayment(rideId, riderId, amountCents) {
         [riderId, rideId, amountCents, PAYMENT_STATUS.COMPLETED]
       )
     ).rows[0];
-    await client.query('UPDATE wallets SET balance_cents = $2, updated_at = NOW() WHERE user_id = $1', [
-      riderId,
-      newBalance,
-    ]);
+    await client.query(
+      'UPDATE wallets SET balance_cents = $2, updated_at = NOW() WHERE user_id = $1',
+      [riderId, newBalance]
+    );
     await client.query(
       `INSERT INTO transactions (user_id, type, amount_cents, balance_after_cents, payment_id, description)
        VALUES ($1, 'ride_payment', $2, $3, $4, $5)`,

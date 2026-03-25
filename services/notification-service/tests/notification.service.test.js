@@ -1,10 +1,7 @@
 const { describe, it } = require('node:test');
 const assert = require('node:assert');
 const { EVENTS } = require('@rideshare/shared');
-const {
-  buildRideDispatch,
-  buildPaymentDispatch,
-} = require('../src/services/notification.service');
+const { buildRideDispatch, buildPaymentDispatch } = require('../src/services/notification.service');
 
 describe('notification.service helpers', () => {
   it('buildRideDispatch: requested notifies rider', () => {
