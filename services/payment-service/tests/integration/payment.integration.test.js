@@ -1,5 +1,3 @@
-const { describe, it, before, after } = require('node:test');
-const assert = require('node:assert');
 const request = require('supertest');
 const jwt = require('jsonwebtoken');
 const app = require('../../src/app');
@@ -11,51 +9,66 @@ function tokenFor(userId) {
   return jwt.sign({ userId, role: 'rider' }, JWT_SECRET, { expiresIn: '1h' });
 }
 
-describe('Payment service integration', () => {
-  before(async () => {
+describe('Payment Service Integration Tests', () => {
+  beforeAll(async () => {
     await app.initDb();
-    await pool.query('DELETE FROM transactions');
-    await pool.query('DELETE FROM payments');
-    await pool.query('DELETE FROM wallets');
+    await pool.query('DELETE FROM transactions WHERE user_id = $1', ['user-pay-integration-1']);
+    await pool.query('DELETE FROM payments WHERE user_id = $1', ['user-pay-integration-1']);
+    await pool.query('DELETE FROM wallets WHERE user_id = $1', ['user-pay-integration-1']);
   });
 
-  after(async () => {
+  afterAll(async () => {
     await pool.end();
   });
 
-  it('GET /health returns 200', async () => {
-    const res = await request(app).get('/health');
-    assert.strictEqual(res.status, 200);
-    assert.strictEqual(res.body.service, 'payment-service');
+  describe('Health Check', () => {
+    it('GET /health returns 200', async () => {
+      const res = await request(app).get('/health');
+      expect(res.status).toBe(200);
+      expect(res.body.service).toBe('payment-service');
+    });
   });
 
-  it('GET /payments/wallet without auth returns 401', async () => {
-    const res = await request(app).get('/payments/wallet');
-    assert.strictEqual(res.status, 401);
+  describe('GET /payments/wallet', () => {
+    it('returns 401 without auth', async () => {
+      const res = await request(app).get('/payments/wallet');
+      expect(res.status).toBe(401);
+    });
+
+    it('returns wallet with auth', async () => {
+      const token = tokenFor('user-pay-integration-1');
+      const res = await request(app)
+        .get('/payments/wallet')
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(res.status).toBe(200);
+      expect(res.body.data.wallet).toBeDefined();
+      expect(typeof res.body.data.wallet.balanceCents).toBe('number');
+    });
   });
 
-  it('GET /payments/wallet with auth returns wallet', async () => {
-    const token = tokenFor('user-pay-1');
-    const res = await request(app).get('/payments/wallet').set('Authorization', `Bearer ${token}`);
-    assert.strictEqual(res.status, 200);
-    assert.ok(res.body.data.wallet);
-    assert.ok(typeof res.body.data.wallet.balanceCents === 'number');
+  describe('POST /payments/wallet/topup', () => {
+    it('increases balance', async () => {
+      const token = tokenFor('user-pay-integration-1');
+      const res = await request(app)
+        .post('/payments/wallet/topup')
+        .set('Authorization', `Bearer ${token}`)
+        .send({ amountCents: 1000 });
+
+      expect(res.status).toBe(200);
+      expect(res.body.data.balanceCents).toBeGreaterThanOrEqual(1000);
+    });
   });
 
-  it('POST /payments/wallet/topup increases balance', async () => {
-    const token = tokenFor('user-pay-1');
-    const res = await request(app)
-      .post('/payments/wallet/topup')
-      .set('Authorization', `Bearer ${token}`)
-      .send({ amountCents: 1000 });
-    assert.strictEqual(res.status, 200);
-    assert.ok(res.body.data.balanceCents >= 1000);
-  });
+  describe('GET /payments/transactions', () => {
+    it('returns transaction list', async () => {
+      const token = tokenFor('user-pay-integration-1');
+      const res = await request(app)
+        .get('/payments/transactions')
+        .set('Authorization', `Bearer ${token}`);
 
-  it('GET /payments/transactions returns list', async () => {
-    const token = tokenFor('user-pay-1');
-    const res = await request(app).get('/payments/transactions').set('Authorization', `Bearer ${token}`);
-    assert.strictEqual(res.status, 200);
-    assert.ok(Array.isArray(res.body.data.transactions));
+      expect(res.status).toBe(200);
+      expect(Array.isArray(res.body.data.transactions)).toBe(true);
+    });
   });
 });
