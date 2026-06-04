@@ -1,6 +1,7 @@
 const express = require('express');
 const locationController = require('../controllers/location.controller');
 const { authenticate, requireDriver } = require('../middleware/auth.middleware');
+const { requireInternalOrAuth } = require('../middleware/internalOrAuth.middleware');
 const {
   validateLocationUpdate,
   validateNearbyQuery,
@@ -18,8 +19,8 @@ router.put(
 );
 router.post('/offline', authenticate, requireDriver, locationController.setOffline);
 
-router.get('/nearby', validateNearbyQuery, locationController.getNearby);
-router.get('/driver/:driverId', locationController.getDriver);
-router.get('/eta', validateEtaQuery, locationController.getEta);
+router.get('/nearby', requireInternalOrAuth, validateNearbyQuery, locationController.getNearby);
+router.get('/driver/:driverId', requireInternalOrAuth, locationController.getDriver);
+router.get('/eta', requireInternalOrAuth, validateEtaQuery, locationController.getEta);
 
 module.exports = router;

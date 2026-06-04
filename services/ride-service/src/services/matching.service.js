@@ -1,4 +1,4 @@
-const { logger } = require('@rideshare/shared');
+const { logger, getInternalServiceHeaders } = require('@rideshare/shared');
 
 const LOCATION_SERVICE_URL = process.env.LOCATION_SERVICE_URL || 'http://localhost:3003';
 
@@ -6,7 +6,9 @@ async function getNearbyDrivers(pickupLat, pickupLng, radiusKm = 5, limit = 10) 
   const q = `lat=${encodeURIComponent(pickupLat)}&lng=${encodeURIComponent(pickupLng)}&radiusKm=${radiusKm}&limit=${limit}`;
   const url = `${LOCATION_SERVICE_URL}/location/nearby?${q}`;
   try {
-    const res = await fetch(url);
+    const res = await fetch(url, {
+      headers: getInternalServiceHeaders('ride-service'),
+    });
     if (!res.ok) {
       logger.warn('Location service nearby failed', { status: res.status });
       return [];
