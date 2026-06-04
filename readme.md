@@ -668,6 +668,3 @@ rideshare-backend/
    - Multi-language
    - Different vehicle types
 
----
-
-This roadmap is aggressive but achievable with focused 8-hour weekend sessions. Each sprint builds on the previous one, ensuring continuous integration and testing throughout development.
